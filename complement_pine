@@ -1,0 +1,101 @@
+
+//
+
+//@version=6
+indicator('Number Complement Calculation', shorttitle = 'NCC', overlay = true)
+
+// Function to calculate the number of decimal digits
+f_get_decimal_digits(_in) =>
+    n = 0
+    s = str.tostring(_in)
+    p = str.pos(s, '.')
+    if na(p)
+        n := 0
+    else
+        n := str.length(str.substring(s, p + 1))
+    n
+
+// Function to multiply the input by 10^number_of_digits and remove the radix point
+f_multiply_and_remove_radix(_in, num_digits) =>
+    _multiplied = _in * math.pow(10, num_digits)
+    _multiplied
+
+// Function to get the integer part of a number
+f_get_integer_part(_in) =>
+    math.floor(_in)
+
+// Function to get the decimal part of a number
+f_get_decimal_part(_in) =>
+    _int_part = math.floor(_in)
+    _dec_part = _in - _int_part
+    _dec_part
+
+// Function to calculate the lower power of 10
+f_get_lower_power_of_10(_in) =>
+    math.pow(10, math.floor(math.log10(_in)))
+
+// Function to calculate the upper power of 10
+f_get_upper_power_of_10(_in) =>
+    math.pow(10, math.ceil(math.log10(_in)))
+
+// Function to calculate the complement of the integer part
+f_get_integer_complement(_int_part) =>
+    upper_power = f_get_upper_power_of_10(_int_part)
+    upper_power - _int_part
+
+// Function to calculate the complement of the decimal part
+f_get_decimal_complement(_dec_part, num_digits) =>
+    dec_complement = math.pow(10, num_digits) - 1 - _dec_part * math.pow(10, num_digits)
+    dec_complement / math.pow(10, num_digits)
+
+// Input variable for the close price
+var float input = close
+
+// Calculate the number of decimal digits
+num_digits = f_get_decimal_digits(input)
+
+// Get the integer part
+integer_part = f_get_integer_part(input)
+
+// Get the decimal part
+decimal_part = f_get_decimal_part(input)
+
+// Calculate the integer part complement
+integer_complement = f_get_integer_complement(integer_part)
+
+// Calculate the decimal part complement
+decimal_complement = f_get_decimal_complement(decimal_part, num_digits)
+
+// Combine integer complement and decimal complement to get the final complement number
+complement_number = integer_complement + decimal_complement
+
+// Create a table to display the results
+var table results_table = table.new(position.bottom_center, 17, 12, border_width = 1, bgcolor = color.gray)
+
+// Table header
+if bar_index == 0
+    table.cell(results_table, 0, 0, 'Description', bgcolor = color.blue, text_color = color.white, text_size = size.large)
+    table.cell(results_table, 0, 1, 'Value', bgcolor = color.blue, text_color = color.white, text_size = size.large)
+
+// Update table content
+if barstate.islast
+    table.cell(results_table, 1, 0, 'Input', bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+    table.cell(results_table, 1, 1, str.tostring(input), bgcolor = color.rgb(0, 15, 68), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+
+    table.cell(results_table, 2, 0, 'Decimal Digits', bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+    table.cell(results_table, 2, 1, str.tostring(num_digits), bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+
+    table.cell(results_table, 3, 0, 'Integer Part', bgcolor = color.rgb(255, 204, 0), text_color = color.black, text_size = size.normal)
+    table.cell(results_table, 3, 1, str.tostring(integer_part), bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+
+    table.cell(results_table, 4, 0, 'Decimal Part', bgcolor = color.rgb(0, 37, 169), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+    table.cell(results_table, 4, 1, str.tostring(decimal_part), bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+
+    table.cell(results_table, 5, 0, 'Integer Complement', bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+    table.cell(results_table, 5, 1, str.tostring(integer_complement), bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+
+    table.cell(results_table, 6, 0, 'Decimal Complement', bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+    table.cell(results_table, 6, 1, str.tostring(decimal_complement), bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+
+    table.cell(results_table, 7, 0, 'Complement Number', bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
+    table.cell(results_table, 7, 1, str.tostring(complement_number), bgcolor = color.rgb(0, 0, 0), text_color = color.rgb(255, 255, 255), text_size = size.normal)
