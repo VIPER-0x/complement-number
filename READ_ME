@@ -1,0 +1,80 @@
+
+
+
+This Pine Script indicator, titled 'Number Complement Calculation' (NCC), calculates the complement of a given number and displays the results in a table on a chart.
+
+1. **Indicator Initialization**:
+   - The script starts with the `indicator` function to initialize the indicator with the title 'Number Complement Calculation' and short title 'NCC'.
+
+2. **Functions**:
+   - `f_get_decimal_digits`: Calculates the number of decimal digits in the input number.
+   - `f_multiply_and_remove_radix`: Multiplies the input by 10 raised to the power of the number of decimal digits and removes the radix point.
+   - `f_get_integer_part`: Gets the integer part of the input number.
+   - `f_get_decimal_part`: Gets the decimal part of the input number.
+   - `f_get_lower_power_of_10`: Calculates the lower power of 10 for the input number.
+   - `f_get_upper_power_of_10`: Calculates the upper power of 10 for the input number.
+   - `f_get_integer_complement`: Calculates the complement of the integer part.
+   - `f_get_decimal_complement`: Calculates the complement of the decimal part.
+
+3. **Main Logic**:
+   - The script reads the input variable `close` (close price).
+   - It calculates the number of decimal digits using `f_get_decimal_digits`.
+   - It obtains the integer part and decimal part using `f_get_integer_part` and `f_get_decimal_part`.
+   - It calculates the integer complement using `f_get_integer_complement`.
+   - It calculates the decimal complement using `f_get_decimal_complement`.
+   - It combines the integer and decimal complements to get the final complement number.
+
+4. **Display Results**:
+   - A table is created and displayed at the bottom center of the chart.
+   - The table headers are initialized at the first bar.
+   - The table is updated with the input value, number of decimal digits, integer part, decimal part, integer complement, decimal complement, and the final complement number.
+
+This explanation can be included in your README file to help users understand the functionality of the script.
+
+## Number Complement Calculation Script
+
+This Pine Script indicator, titled 'Number Complement Calculation' (short title 'NCC'), is designed to calculate the complement of a given number. The script performs the following key steps:
+
+1. **Calculate the Number of Decimal Digits**:
+    - The function `f_get_decimal_digits` calculates the number of decimal digits in the input number.
+
+2. **Multiply and Remove Radix Point**:
+    - The function `f_multiply_and_remove_radix` multiplies the input number by 10 raised to the power of the number of decimal digits, effectively removing the radix point.
+
+3. **Get Integer and Decimal Parts**:
+    - The functions `f_get_integer_part` and `f_get_decimal_part` extract the integer and decimal parts of the input number, respectively.
+
+4. **Calculate Power of 10**:
+    - The functions `f_get_lower_power_of_10` and `f_get_upper_power_of_10` calculate the lower and upper powers of 10 for the input number.
+
+5. **Calculate Complements**:
+    - The function `f_get_integer_complement` calculates the complement of the integer part.
+    - The function `f_get_decimal_complement` calculates the complement of the decimal part.
+
+6. **Combine Complements**:
+    - The integer and decimal complements are combined to get the final complement number.
+
+7. **Display Results**:
+    - The results are displayed in a table on the chart, including the input number, number of decimal digits, integer part, decimal part, integer complement, decimal complement, and the final complement number.
+
+### Usage
+To use this script, simply add it to your Pine Script editor on TradingView and apply it to your chart. The results will be displayed in a table at the bottom center of the chart.
+
+### Functions
+
+- `f_get_decimal_digits(_in)`: Calculates the number of decimal digits in the input number.
+- `f_multiply_and_remove_radix(_in, num_digits)`: Multiplies the input by 10^number_of_digits and removes the radix point.
+- `f_get_integer_part(_in)`: Gets the integer part of the input number.
+- `f_get_decimal_part(_in)`: Gets the decimal part of the input number.
+- `f_get_lower_power_of_10(_in)`: Calculates the lower power of 10 for the input number.
+- `f_get_upper_power_of_10(_in)`: Calculates the upper power of 10 for the input number.
+- `f_get_integer_complement(_int_part)`: Calculates the complement of the integer part.
+- `f_get_decimal_complement(_dec_part, num_digits)`: Calculates the complement of the decimal part.
+
+### Example
+If the input number is `123.45`, the script will:
+- Determine that there are 2 decimal digits.
+- Extract `123` as the integer part and `0.45` as the decimal part.
+- Calculate the complements of these parts.
+- Combine them to get the final complement number.
+- Display the results in a table on the chart.      
